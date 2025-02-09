@@ -6,14 +6,15 @@ sidebar_position: 1
 
 # Documentation Index
 
-Welcome to the documentation for **NPM-Template**. Below is a list of available
+Welcome to the documentation for **url-validator**. Below is a list of available
 guides:
 
 ## Description
 
-**A fully-configured TypeScript NPM package template with built-in CI/CD, automated
-tests, ESLint, Prettier, and Docusaurus documentation. Get started quickly with best
-practices for package development**
+**A lightweight and efficient TS library for validating URLs. It ensures that URLs
+are correctly formatted and provides an optional feature to check whether a URL is
+live by sending an HTTP request. This package is designed for web applications, APIs,
+and services that require reliable URL validation.**
 
 ### 📌 Getting Started
 

@@ -1,11 +1,11 @@
 <div align="center">
    
-# NPM-Template
+# url-validator
  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
  </div>
 
-Welcome to The-Node-Forge **npm-template**! This repository serves as a **template**
+Welcome to The-Node-Forge **url-validator**! This repository serves as a **template**
 for The Node Forge members to quickly scaffold a new **TypeScript-based NPM package**
 with built-in **linting, testing, documentation, and CI/CD**.
 
@@ -69,7 +69,7 @@ lives in the `docs/docs/` folder.
 
 #### 📂 **`docs/docusaurus.config.ts`**
 
-- remove any instance of /npm-template/ and add your /repo-name/
+- remove any instance of /url-validator/ and add your /repo-name/
 - Edit baseUrl to match repo name /repo-name/.
 - Edit meta data to matcg your package details, comments left to help
 
