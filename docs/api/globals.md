@@ -1,6 +1,6 @@
 [**@the-node-forge/url-validator**](README.md)
 
-***
+---
 
 # @the-node-forge/url-validator
 

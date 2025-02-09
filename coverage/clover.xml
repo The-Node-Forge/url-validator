@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1739135445209" clover="3.2.0">
-  <project timestamp="1739135445209" name="All files">
-    <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1" elements="3" coveredelements="3" complexity="0" loc="2" ncloc="2" packages="1" files="1" classes="1"/>
-    <file name="index.ts" path="/home/runner/work/url-validator/url-validator/src/index.ts">
-      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <line num="7" count="1" type="stmt"/>
+<coverage generated="1739141566396" clover="3.2.0">
+  <project timestamp="1739141566396" name="All files">
+    <metrics statements="22" coveredstatements="20" conditionals="5" coveredconditionals="3" methods="2" coveredmethods="2" elements="29" coveredelements="25" complexity="0" loc="22" ncloc="22" packages="1" files="2" classes="2"/>
+    <file name="isUrlLive.ts" path="/home/runner/work/url-validator/url-validator/src/isUrlLive.ts">
+      <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="7" count="7" type="stmt"/>
+      <line num="8" count="7" type="stmt"/>
+      <line num="13" count="6" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+    </file>
+    <file name="validateUrl.ts" path="/home/runner/work/url-validator/url-validator/src/validateUrl.ts">
+      <metrics statements="16" coveredstatements="14" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="9" type="stmt"/>
+      <line num="3" count="9" type="stmt"/>
+      <line num="6" count="6" type="stmt"/>
+      <line num="7" count="6" type="cond" truecount="1" falsecount="0"/>
       <line num="8" count="1" type="stmt"/>
+      <line num="12" count="5" type="stmt"/>
+      <line num="13" count="5" type="cond" truecount="1" falsecount="0"/>
+      <line num="14" count="2" type="stmt"/>
+      <line num="18" count="3" type="stmt"/>
+      <line num="19" count="3" type="cond" truecount="0" falsecount="1"/>
+      <line num="20" count="0" type="stmt"/>
+      <line num="24" count="3" type="cond" truecount="0" falsecount="1"/>
+      <line num="25" count="0" type="stmt"/>
+      <line num="28" count="3" type="stmt"/>
+      <line num="30" count="3" type="stmt"/>
     </file>
   </project>
 </coverage>
