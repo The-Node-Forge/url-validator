@@ -1,0 +1,2 @@
+{"/home/runner/work/npm-template/npm-template/src/index.ts": {"path":"/home/runner/work/npm-template/npm-template/src/index.ts","statementMap":{"0":{"start":{"line":7,"column":21},"end":{"line":9,"column":1}},"1":{"start":{"line":8,"column":2},"end":{"line":8,"column":27}},"2":{"start":{"line":7,"column":13},"end":{"line":7,"column":21}}},"fnMap":{"0":{"name":"(anonymous_0)","decl":{"start":{"line":7,"column":21},"end":{"line":7,"column":22}},"loc":{"start":{"line":7,"column":46},"end":{"line":9,"column":1}}}},"branchMap":{},"s":{"0":1,"1":1,"2":1},"f":{"0":1},"b":{}}
+}

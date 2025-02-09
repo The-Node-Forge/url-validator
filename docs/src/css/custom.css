@@ -1,0 +1,94 @@
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --markdown-code-bg: #eeeeee;
+  --markdown-code-text: #c7254e;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
+  --markdown-code-bg: #1e1e1e;
+  --markdown-code-text: #ffcb6b;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  border-bottom: 1px solid var(--ifm-color-primary);
+  padding-bottom: 0.3em;
+  color: var(--ifm-color-primary-darkest);
+}
+
+[data-theme='dark'] .markdown h1,
+[data-theme='dark'] .markdown h2,
+[data-theme='dark'] .markdown h3 {
+  border-bottom: 1px solid var(--ifm-color-primary-light);
+  color: var(--ifm-color-primary-lightest);
+}
+
+.markdown pre {
+  background-color: var(--markdown-code-bg);
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  color: var(--markdown-code-text);
+}
+
+.markdown code {
+  color: var(--markdown-code-text);
+  background-color: var(--markdown-code-bg);
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+.markdown p code {
+  padding: 2px 4px;
+  border-radius: 3px;
+  background-color: var(--markdown-code-bg);
+  color: var(--markdown-code-text);
+  font-weight: bold;
+}
+
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.markdown table th,
+.markdown table td {
+  border: 1px solid var(--ifm-color-primary-dark);
+  padding: 8px;
+}
+
+[data-theme='dark'] .markdown table th,
+[data-theme='dark'] .markdown table td {
+  border-color: var(--ifm-color-primary-light);
+}
+
+.markdown blockquote {
+  border-left: 4px solid var(--ifm-color-primary);
+  padding: 10px;
+  margin-left: 0;
+  background: rgba(46, 133, 85, 0.1);
+}
+
+[data-theme='dark'] .markdown blockquote {
+  border-left-color: var(--ifm-color-primary-light);
+  background: rgba(37, 194, 160, 0.1);
+}

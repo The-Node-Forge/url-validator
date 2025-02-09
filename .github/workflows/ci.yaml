@@ -1,0 +1,64 @@
+name: Continuous Integration (CI)
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Prettier and auto-fix
+        run: npx prettier --write .
+
+      - name: Run ESLint and auto-fix
+        run: npx eslint . --fix
+
+      - name: Ensure test files exist
+        run: |
+          if ! find ./tests ./src -type f -name "*.test.ts" -o -name "*.test.js" | grep .; then
+            echo "::error::No test files found! PRs require tests."
+            exit 1
+          fi
+
+      - name: Run Jest tests
+        run: npm test -- --coverage
+
+      - name: Upload Jest test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-results
+          path: coverage
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: auto-format & lint fixes"
+
+          if [[ $GITHUB_REF != refs/pull/* ]]; then
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+          else
+            echo "Skipping push: Cannot push changes to a PR merge ref."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,31 @@
+name: Auto Assign to Creator
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto_assign:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Auto-assign Issue or PR to creator
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const payload = context.payload;
+            const creator = payload.issue ? payload.issue.user.login : payload.pull_request.user.login;
+            const issue_number = payload.issue ? payload.issue.number : payload.pull_request.number;
+
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              assignees: [creator]
+            });

@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                 // Target JavaScript version
+    "module": "CommonJS",               // Module system used
+    "strict": true,                     // Enable all strict type-checking options
+    "esModuleInterop": true,            // Allow default imports from CommonJS modules
+    "skipLibCheck": true,               // Skip type checking for dependencies
+    "declaration": true,                // Emit `.d.ts` declaration files
+    "outDir": "dist",                   // Output directory for compiled files
+    "rootDir": ".",                      // Directory containing source files
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+  },
+  "include": ["src/**/*", "tests"],              // Files to include in compilation
+  "exclude": ["node_modules"]  // Files/directories to exclude
+}
