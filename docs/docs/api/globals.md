@@ -1,5 +1,1 @@
-# my-npm-package v1.0.0
-
-## Functions
-
-- [greet](functions/greet.md)
+# @the-node-forge/url-validator v1.0.0

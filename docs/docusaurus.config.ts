@@ -3,8 +3,9 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'The Node Forge', // Edit
-  tagline: 'Lightweight NPM Packages Made Easy', // Edit
+  title: 'The Node Forge',
+  tagline:
+    'A lightweight and efficient library for validating URLs. It ensures that URLs are correctly formatted and provides an optional feature to check whether a URL is live by sending an HTTP request. This package is designed for web applications, APIs, and services that require reliable URL validation',
   favicon: 'img/favicon.ico',
 
   url: 'https://the-node-forge.github.io',
@@ -12,7 +13,7 @@ const config: Config = {
   trailingSlash: false,
 
   organizationName: 'The-Node-Forge',
-  projectName: 'url-validator', // Edit
+  projectName: 'url-validator',
   deploymentBranch: 'gh-pages',
 
   onBrokenLinks: 'throw',
@@ -65,12 +66,12 @@ const config: Config = {
           label: 'Docs',
         },
 
-        {
-          type: 'docSidebar',
-          sidebarId: 'apiSidebar',
-          position: 'left',
-          label: 'API',
-        },
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'apiSidebar',
+        //   position: 'left',
+        //   label: 'API',
+        // },
         // uncomment to enable blogs
         // { to: '/blog', label: 'Blog', position: 'left' },
         {

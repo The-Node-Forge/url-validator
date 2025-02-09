@@ -1,9 +1,10 @@
-[**my-npm-package**](README.md)
+[**@the-node-forge/url-validator**](README.md)
 
----
+***
 
-# my-npm-package
+# @the-node-forge/url-validator
 
 ## Functions
 
-- [greet](functions/greet.md)
+- [isUrlLive](functions/isUrlLive.md)
+- [validateUrl](functions/validateUrl.md)
