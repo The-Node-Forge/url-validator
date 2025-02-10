@@ -8,7 +8,7 @@
 
 > **validateUrl**(`url`): `boolean`
 
-Defined in: [validateUrl.ts:1](https://github.com/The-Node-Forge/url-validator/blob/aee1b30006d3402313ca25a2cf1919fe298e952a/src/validateUrl.ts#L1)
+Defined in: [validateUrl.ts:1](https://github.com/The-Node-Forge/url-validator/blob/f17bda8fb27e2e9f4fabb0ea59c6b5ba24cc8ee6/src/validateUrl.ts#L1)
 
 ## Parameters
 

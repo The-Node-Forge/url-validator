@@ -25,9 +25,24 @@
     "url": "https://github.com/The-Node-Forge/url-validator"
   },
   "keywords": [
-    "express",
+    "url",
+    "url-validation",
+    "url-validator",
+    "validate-url",
+    "http",
+    "https",
+    "url-checker",
+    "web-validation",
     "typescript",
-    "npm-package"
+    "axios",
+    "fetch",
+    "npm-package",
+    "web-development",
+    "javascript",
+    "network-utilities",
+    "http-status",
+    "status-check",
+    "url-live-check"
   ],
   "author": "The Node Forge",
   "license": "MIT",

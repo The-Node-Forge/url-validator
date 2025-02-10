@@ -53,7 +53,7 @@ const config: Config = {
   themeConfig: {
     image: 'img/theNodeForge.png', // Edit
     navbar: {
-      title: 'The Node Forge', // Your Package Name
+      title: 'url-validator', // Your Package Name
       logo: {
         alt: 'The Node Forge Logo', // edit
         src: 'img/theNodeForge.png', // Your Logo
