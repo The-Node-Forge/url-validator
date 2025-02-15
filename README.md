@@ -5,6 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [![NPM Version](https://img.shields.io/npm/v/@the-node-forge/url-validator)](https://www.npmjs.com/package/@the-node-forge/url-validator)
+[![NPM Downloads](https://img.shields.io/npm/dm/@the-node-forge/url-validator)](https://www.npmjs.com/package/@the-node-forge/url-validator)
+
 [![Build Status](https://img.shields.io/github/actions/workflow/status/the-node-forge/url-validator/ci.yaml?branch=main)](https://github.com/The-Node-Forge/url-validator/actions)
 
 [Live Documentation](https://the-node-forge.github.io/url-validator/)
