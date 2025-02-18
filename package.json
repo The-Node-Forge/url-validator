@@ -1,6 +1,6 @@
 {
   "name": "@the-node-forge/url-validator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A lightweight and efficient library for validating URLs. It ensures that URLs are correctly formatted and provides an optional feature to check whether a URL is live by sending an HTTP request. This package is designed for web applications, APIs, and services that require reliable URL validation.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
