@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1739914799481" clover="3.2.0">
-  <project timestamp="1739914799481" name="All files">
-    <metrics statements="22" coveredstatements="20" conditionals="5" coveredconditionals="3" methods="2" coveredmethods="2" elements="29" coveredelements="25" complexity="0" loc="22" ncloc="22" packages="1" files="2" classes="2"/>
+<coverage generated="1739916558897" clover="3.2.0">
+  <project timestamp="1739916558898" name="All files">
+    <metrics statements="21" coveredstatements="19" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="2" elements="27" coveredelements="23" complexity="0" loc="21" ncloc="21" packages="1" files="2" classes="2"/>
     <file name="isUrlLive.ts" path="/home/runner/work/url-validator/url-validator/src/isUrlLive.ts">
-      <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="1" coveredmethods="1"/>
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="1" count="1" type="stmt"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="7" count="7" type="stmt"/>
-      <line num="8" count="7" type="stmt"/>
-      <line num="13" count="6" type="stmt"/>
-      <line num="15" count="1" type="stmt"/>
+      <line num="2" count="6" type="stmt"/>
+      <line num="3" count="6" type="stmt"/>
+      <line num="4" count="5" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
     </file>
     <file name="validateUrl.ts" path="/home/runner/work/url-validator/url-validator/src/validateUrl.ts">
       <metrics statements="16" coveredstatements="14" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
