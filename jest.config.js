@@ -4,4 +4,13 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js'], // Recognize TypeScript and JavaScript files
   testMatch: ['**/tests/**/*.test.ts'], // Match test files
   verbose: true, // Show detailed test results
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest',
+  },
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
 };
