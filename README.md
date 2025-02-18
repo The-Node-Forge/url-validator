@@ -10,7 +10,6 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/the-node-forge/url-validator/ci.yaml?branch=main)](https://github.com/The-Node-Forge/url-validator/actions)
 ![Platform](https://img.shields.io/badge/platform-node.js%20%7C%20browser-brightgreen)
 
-
 [Live Documentation](https://the-node-forge.github.io/url-validator/)
 
 </div>
