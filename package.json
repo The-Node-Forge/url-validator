@@ -44,7 +44,10 @@
     "status-check",
     "url-live-check"
   ],
-  "author": "The Node Forge",
+  "author": {
+    "name": "Lanny MacMillan",
+    "url": "https://github.com/Lanny-MacMillan"
+  },
   "license": "MIT",
   "files": [
     "dist",
