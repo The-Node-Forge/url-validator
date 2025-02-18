@@ -1,16 +1,7 @@
-import axios from 'axios';
-
-export async function isUrlLive(
-  url: string,
-  allowedStatusCodes: number[] = [200, 301, 302, 403],
-): Promise<boolean> {
+export async function isUrlLive(url: string): Promise<boolean> {
   try {
-    const response = await axios.get(url, {
-      timeout: 5000,
-      maxRedirects: 5,
-    });
-
-    return allowedStatusCodes.includes(response.status);
+    const response = await fetch(url, { mode: 'no-cors' });
+    return response.ok;
   } catch {
     return false;
   }
