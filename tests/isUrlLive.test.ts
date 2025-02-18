@@ -1,46 +1,55 @@
-import axios from 'axios';
-
 import { isUrlLive } from '../src/isUrlLive';
 
-jest.mock('axios');
-
 describe('isUrlLive', () => {
-  test('Live URL with default allowed status codes', async () => {
-    (axios.get as jest.Mock).mockResolvedValue({ status: 200 });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test('Live URL returns true', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve(new Response(null, { status: 200 })),
+    ) as jest.Mock;
+
     await expect(isUrlLive('https://example.com')).resolves.toBe(true);
   });
 
-  test('Redirect URL is considered live', async () => {
-    (axios.get as jest.Mock).mockResolvedValue({ status: 301 });
-    await expect(isUrlLive('https://redirect.com')).resolves.toBe(true);
+  test('Redirect URL returns false (no-cors hides status)', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve(new Response(null, { status: 301 })),
+    ) as jest.Mock;
+
+    await expect(isUrlLive('https://redirect.com')).resolves.toBe(false);
   });
 
-  test('Forbidden URL is considered live by default', async () => {
-    (axios.get as jest.Mock).mockResolvedValue({ status: 403 });
-    await expect(isUrlLive('https://forbidden.com')).resolves.toBe(true);
+  test('Forbidden URL returns false (fetch does not expose status)', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve(new Response(null, { status: 403 })),
+    ) as jest.Mock;
+
+    await expect(isUrlLive('https://forbidden.com')).resolves.toBe(false);
   });
 
-  test('Not Found URL is considered dead', async () => {
-    (axios.get as jest.Mock).mockResolvedValue({ status: 404 });
+  test('Not Found URL returns false', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve(new Response(null, { status: 404 })),
+    ) as jest.Mock;
+
     await expect(isUrlLive('https://notfound.com')).resolves.toBe(false);
   });
 
-  test('Dead URL (network error)', async () => {
-    (axios.get as jest.Mock).mockRejectedValue(new Error('Network Error'));
+  test('Dead URL (network error) returns false', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.reject(new Error('Network Error')),
+    ) as jest.Mock;
+
     await expect(isUrlLive('https://notarealwebsite.example')).resolves.toBe(false);
   });
 
-  test('Custom allowed status codes (only 200 and 302)', async () => {
-    (axios.get as jest.Mock).mockResolvedValue({ status: 403 }); // Default allows 403, but we override it
-    await expect(isUrlLive('https://customstatus.com', [200, 302])).resolves.toBe(
-      false,
-    );
-  });
+  test('Fetch failure (500 Internal Server Error) returns false', async () => {
+    global.fetch = jest.fn(() =>
+      Promise.resolve(new Response(null, { status: 500 })),
+    ) as jest.Mock;
 
-  test('Custom allowed status codes (includes 403)', async () => {
-    (axios.get as jest.Mock).mockResolvedValue({ status: 403 });
-    await expect(
-      isUrlLive('https://customstatus.com', [200, 301, 302, 403]),
-    ).resolves.toBe(true);
+    await expect(isUrlLive('https://servererror.com')).resolves.toBe(false);
   });
 });

@@ -19,7 +19,7 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['docs/**'],
+    ignores: ['docs/**', 'dist/**'],
   },
   ...fixupConfigRules(
     compat.extends(
