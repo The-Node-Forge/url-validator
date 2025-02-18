@@ -11,6 +11,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
   },
-  "include": ["src/**/*", "tests"],              // Files to include in compilation
+  "include": ["src/**/*"],              // Files to include in compilation
   "exclude": ["node_modules"]  // Files/directories to exclude
 }
