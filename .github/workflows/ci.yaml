@@ -48,6 +48,11 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Smoke test built package
+        run: |
+          node -e "const m = require('./dist'); if (typeof m.validateUrl !== 'function' || typeof m.isUrlLive !== 'function') process.exit(1)"
+          node --input-type=module -e "import('./dist/index.js').then((m) => { if (typeof m.validateUrl !== 'function' || typeof m.isUrlLive !== 'function') process.exit(1) })"
+
       - name: Run Jest tests
         run: npm test -- --coverage
 
