@@ -1,2 +1,7 @@
 .prettierrc
 tsconfig.json
+coverage
+docs/api
+docs/docs/api
+docs/build
+docs/.docusaurus
