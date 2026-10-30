@@ -8,6 +8,12 @@ sidebar_position: 5
 
 - Initial release
 
+### v1.1.1 - 2026-10-30
+
+- Package metadata only, no code changes: declare `engines.node >=18`,
+  `sideEffects: false`, `bugs` and `homepage`, and a normalized `repository.url`.
+- Releases are now published from CI with npm provenance.
+
 ### v1.1.0 - 2026-10-30
 
 - `isUrlLive` now sends a `HEAD` request, does not follow redirects, cancels the
