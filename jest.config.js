@@ -8,13 +8,4 @@ module.exports = {
   coverageThreshold: {
     global: { statements: 90, branches: 75, functions: 100, lines: 90 },
   }, // Fail CI if coverage regresses
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
-  extensionsToTreatAsEsm: ['.ts'],
-  globals: {
-    'ts-jest': {
-      useESM: true,
-    },
-  },
 };

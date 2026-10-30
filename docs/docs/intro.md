@@ -20,6 +20,7 @@ and services that require reliable URL validation.**
 
 - [Installation Guide](./INSTALLATION.md)
 - [Usage Instructions](./USAGE.md)
+
 <!-- - [Configuration](..guides/CONFIGURATION.md) -->
 
 ### 🔧 Developer Guide
