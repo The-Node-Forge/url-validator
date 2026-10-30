@@ -4,6 +4,13 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    groups:
+      typedoc: # typedoc plugins pin a typedoc minor
+        patterns:
+          - 'typedoc*'
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
   - package-ecosystem: npm
     directory: /docs
     schedule:
@@ -12,6 +19,10 @@ updates:
       docusaurus: # these packages must be upgraded in lockstep
         patterns:
           - '@docusaurus/*'
+      typedoc:
+        patterns:
+          - 'typedoc*'
+          - 'docusaurus-plugin-typedoc'
   - package-ecosystem: github-actions
     directory: /
     schedule:
