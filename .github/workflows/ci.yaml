@@ -1,10 +1,13 @@
 name: Continuous Integration (CI)
 
+permissions:
+  contents: write # only used by the auto-format commit step below
+
 on:
   push:
-    branches: ['*']
+    branches: ['**']
   pull_request:
-    branches: ['*']
+    branches: ['**']
   workflow_dispatch:
 
 jobs:
@@ -13,17 +16,18 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: npm
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Prettier and auto-fix
         run: npx prettier --write .
@@ -33,17 +37,23 @@ jobs:
 
       - name: Ensure test files exist
         run: |
-          if ! find ./tests ./src -type f -name "*.test.ts" -o -name "*.test.js" | grep .; then
+          if ! find ./tests ./src -type f \( -name "*.test.ts" -o -name "*.test.js" \) | grep .; then
             echo "::error::No test files found! PRs require tests."
             exit 1
           fi
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Build
+        run: npm run build
 
       - name: Run Jest tests
         run: npm test -- --coverage
 
       - name: Upload Jest test results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: jest-results
           path: coverage
