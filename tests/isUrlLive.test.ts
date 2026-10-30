@@ -92,4 +92,84 @@ describe('isUrlLive', () => {
 
     await expect(isUrlLive('https://example.com')).resolves.toBe(false);
   });
+
+  describe('request hardening', () => {
+    test('sends a HEAD request and does not follow redirects', async () => {
+      const fetchMock = mockFetch(() =>
+        Promise.resolve(new Response(null, { status: 302 })),
+      );
+
+      await expect(isUrlLive('https://example.com')).resolves.toBe(true);
+      expect(fetchMock.mock.calls[0][1]).toMatchObject({
+        method: 'HEAD',
+        redirect: 'manual',
+      });
+    });
+
+    test('cancels the response body', async () => {
+      const cancel = jest.fn(() => Promise.resolve());
+      mockFetch(() => Promise.resolve({ body: { cancel } }));
+
+      await expect(isUrlLive('https://example.com')).resolves.toBe(true);
+      expect(cancel).toHaveBeenCalledTimes(1);
+    });
+
+    test('still resolves true if the response has no body', async () => {
+      mockFetch(() => Promise.resolve({ body: null }));
+
+      await expect(isUrlLive('https://example.com')).resolves.toBe(true);
+    });
+
+    test('uses a 5s timeout by default', async () => {
+      const timeoutSpy = jest.spyOn(AbortSignal, 'timeout');
+      mockFetch(() => Promise.resolve(new Response(null, { status: 200 })));
+
+      await isUrlLive('https://example.com');
+      expect(timeoutSpy).toHaveBeenCalledWith(5000);
+    });
+
+    test('resolves false if the server never responds', async () => {
+      mockHangingFetch();
+      const start = Date.now();
+
+      await expect(
+        isUrlLive('https://example.com', { timeoutMs: 50 }),
+      ).resolves.toBe(false);
+      expect(Date.now() - start).toBeLessThan(1000);
+    });
+
+    test('passes an abort signal to fetch', async () => {
+      const fetchMock = mockFetch(() =>
+        Promise.resolve(new Response(null, { status: 200 })),
+      );
+
+      await isUrlLive('https://example.com');
+      expect(fetchMock.mock.calls[0][1].signal).toBeInstanceOf(AbortSignal);
+    });
+  });
+
+  describe('non-http(s) protocols', () => {
+    test.each([
+      'ftp://example.com',
+      'file:///etc/passwd',
+      'gopher://example.com',
+      'FTP://example.com',
+    ])('resolves false without calling fetch: %s', async (url) => {
+      const fetchMock = mockFetch(() =>
+        Promise.resolve(new Response(null, { status: 200 })),
+      );
+
+      await expect(isUrlLive(url)).resolves.toBe(false);
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+  });
 });
+
+function mockHangingFetch() {
+  global.fetch = jest.fn(
+    (_url: unknown, init?: RequestInit) =>
+      new Promise((_resolve, reject) => {
+        init?.signal?.addEventListener('abort', () => reject(init.signal?.reason));
+      }),
+  ) as unknown as typeof fetch;
+}

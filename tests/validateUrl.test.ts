@@ -95,9 +95,83 @@ describe('validateUrl', () => {
 
     test('handles very long input without hanging', () => {
       const start = Date.now();
-      expect(validateUrl(`https://${'a.'.repeat(50_000)}com`)).toBe(true);
+      expect(validateUrl(`https://${'a.'.repeat(50_000)}com`)).toBe(false);
       expect(validateUrl(`https://example.com/${'a'.repeat(1_000_000)}`)).toBe(true);
       expect(Date.now() - start).toBeLessThan(1000);
+    });
+  });
+
+  describe('hardening', () => {
+    test.each([
+      ['newline in host', 'https://exa\nmple.com'],
+      ['tab in host', 'https://exam\tple.com'],
+      ['carriage return', 'https://example.com\r\nHost: evil.com'],
+      ['null byte', 'https://example.com/\u0000'],
+      ['leading space', ' https://example.com'],
+      ['trailing newline', 'https://example.com\n'],
+    ])('rejects whitespace/control characters: %s', (_name, url) => {
+      expect(validateUrl(url)).toBe(false);
+    });
+
+    test.each([
+      'https://user:pass@example.com',
+      'https://user@example.com',
+      'https://example.com@evil.com',
+      'https://:pass@example.com',
+    ])('rejects embedded credentials: %s', (url) => {
+      expect(validateUrl(url)).toBe(false);
+    });
+
+    test('allows an @ in the path, query or fragment', () => {
+      expect(validateUrl('https://example.com/@user')).toBe(true);
+      expect(validateUrl('https://example.com/?email=a@b.com')).toBe(true);
+    });
+
+    test.each([
+      'https://a..b.com',
+      'https://-a.com',
+      'https://a-.com',
+      'https://exa_mple.com',
+      'https://.example.com',
+      'https://example.c',
+      'https://example.123',
+      `https://${'a'.repeat(64)}.com`,
+      `https://${'a.'.repeat(130)}com`,
+    ])('rejects malformed hostnames: %s', (url) => {
+      expect(validateUrl(url)).toBe(false);
+    });
+
+    test('accepts boundary-length labels and hostnames', () => {
+      expect(validateUrl(`https://${'a'.repeat(63)}.com`)).toBe(true);
+      expect(
+        validateUrl(
+          `https://${'a'.repeat(61)}.${'b'.repeat(61)}.${'c'.repeat(61)}.com`,
+        ),
+      ).toBe(true);
+    });
+
+    test('accepts hyphens inside labels and digits in subdomains', () => {
+      expect(validateUrl('https://my-site.example.com')).toBe(true);
+      expect(validateUrl('https://123.example.com')).toBe(true);
+    });
+
+    test('accepts internationalized TLDs (punycode)', () => {
+      expect(validateUrl('https://example.рф')).toBe(true);
+      expect(validateUrl('https://пример.рф')).toBe(true);
+    });
+
+    test('rejects hosts that only look like IP addresses', () => {
+      expect(validateUrl('http://0x7f.1')).toBe(false);
+      expect(validateUrl('http://2130706433')).toBe(false); // 127.0.0.1 as a decimal
+      expect(validateUrl('http://127.1')).toBe(false);
+    });
+
+    test('rejects non-string input even if it stringifies to a valid URL', () => {
+      const sneaky = { toString: () => 'https://example.com' };
+      expect(validateUrl(sneaky as unknown as string)).toBe(false);
+      expect(validateUrl(new URL('https://example.com') as unknown as string)).toBe(
+        false,
+      );
     });
   });
 });
