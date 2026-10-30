@@ -6,7 +6,10 @@ sidebar_position: 4
 
 ### `validateUrl(url)`
 
-Validates whether a given URL is correctly formatted.
+Validates whether a given URL is a well-formed `http`/`https` URL with a real domain
+name. Rejects IP addresses, `localhost`, embedded credentials (`user:pass@host`),
+whitespace/control characters and malformed hostnames. This is a syntax check only
+and does not prevent URLs that resolve to private addresses.
 
 **Parameters:**
 
@@ -30,16 +33,17 @@ console.log(validateUrl('htp://invalid-url')); // ❌ false
 
 ---
 
-### `isUrlLive(url, allowedStatusCodes?)`
+### `isUrlLive(url, options?)`
 
-Checks if a given URL is reachable by making an HTTP request.
+Checks if a given URL is reachable by sending it an HTTP `HEAD` request. Redirects
+are not followed.
 
 **Parameters:**
 
-| Parameter            | Type                  | Default                | Description                                              |
-| -------------------- | --------------------- | ---------------------- | -------------------------------------------------------- |
-| `url`                | `string`              | Required               | The URL to check if it's live.                           |
-| `allowedStatusCodes` | `number[]` (optional) | `[200, 301, 302, 403]` | A list of status codes that should be considered "live". |
+| Parameter           | Type                | Default  | Description                                     |
+| ------------------- | ------------------- | -------- | ----------------------------------------------- |
+| `url`               | `string`            | Required | The URL to check if it's live.                  |
+| `options.timeoutMs` | `number` (optional) | `5000`   | Give up and resolve `false` after this many ms. |
 
 **Example usage:**
 
@@ -48,13 +52,17 @@ import { isUrlLive } from '@the-node-forge/url-validator';
 
 isUrlLive('https://example.com').then(console.log); // ✅ true/false
 
-// Custom allowed status codes
-isUrlLive('https://example.com', [200, 302]).then(console.log); // ✅ true if 200 or 302
+// Custom timeout
+isUrlLive('https://example.com', { timeoutMs: 1000 }).then(console.log); // ✅ false if no response within 1s
 ```
 
 **Returns:**
 
-- `Promise<boolean>` – Resolves to `true` if the URL is reachable and returns a
-  status in `allowedStatusCodes`, otherwise `false`.
+- `Promise<boolean>` – Resolves to `true` if the server responded (any status, so a
+  `404` still counts; redirects are not followed), otherwise `false`. Never rejects.
+
+> ⚠️ `isUrlLive` requests whatever address it is given, including `localhost` and
+> cloud metadata addresses such as `169.254.169.254`. If you pass it untrusted input
+> on a server, check where the host resolves to first.
 
 ---

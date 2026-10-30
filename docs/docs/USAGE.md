@@ -45,17 +45,14 @@ isUrlLive('https://example.com').then((isLive) => {
 
 ---
 
-**2️⃣ 🌐 Custom Allowed Status Codes**
+**2️⃣ ⏱️ Custom Timeout**
 
-Define which HTTP status codes should be considered "live".
+`isUrlLive` gives up after 5 seconds by default. Override it with `timeoutMs`.
 
 ```typescript
 import { isUrlLive } from '@the-node-forge/url-validator';
 
-// Custom allowed status codes
-isUrlLive('https://example.com', [200, 302]).then(console.log); // ✅ true if status is 200 or 302
-
-isUrlLive('https://example.com', [200, 301, 302, 403]).then(console.log); // ✅ true if status is in list
+isUrlLive('https://example.com', { timeoutMs: 1000 }).then(console.log); // ✅ false if no response within 1s
 ```
 
 ---
