@@ -18,7 +18,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm test && npm run build",
     "build": "tsc",
     "docs:generate": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
     "docs:build": "npm run docs:generate && cd docs && npm run build",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/The-Node-Forge/url-validator"
+    "url": "git+https://github.com/The-Node-Forge/url-validator.git"
   },
   "keywords": [
     "url",
@@ -78,5 +78,13 @@
     "typedoc": "^0.28.20",
     "typedoc-plugin-markdown": "^4.14.1",
     "typescript": "^5.7.3"
-  }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "bugs": {
+    "url": "https://github.com/The-Node-Forge/url-validator/issues"
+  },
+  "homepage": "https://the-node-forge.github.io/url-validator/"
 }
