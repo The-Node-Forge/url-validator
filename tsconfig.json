@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "declaration": true,
     "declarationMap": true,
