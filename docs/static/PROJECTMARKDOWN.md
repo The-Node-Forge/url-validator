@@ -22,10 +22,11 @@ is live**, and **ensure proper domain formatting** for better security.
 - ✅ **Ensure Valid Protocols** – Only accepts `http://` and `https://` URLs.
 - ✅ **Validate Domain and TLD** – Ensures URLs have a proper domain and top-level
   domain.
-- ✅ **Block Invalid IP Addresses** – Prevents malformed or private IPs.
-- ✅ **Customizable Allowed Status Codes** – Define which HTTP status codes should be
-  considered "live".
-- ✅ **Handles Redirects** – Follows up to 5 redirects by default.
+- ✅ **Reject IP Addresses and Bare Hosts** – Only real domain names are accepted,
+  not IPs or `localhost`.
+- ✅ **Reject Embedded Credentials** – `https://user:pass@host` URLs are invalid.
+- ✅ **Request Timeout** – `isUrlLive` gives up after 5 seconds by default.
+- ✅ **Safe Redirect Handling** – `isUrlLive` never follows redirects.
 - ✅ **Lightweight & Fast** – Minimal dependencies for quick performance.
 - ✅ **TypeScript Support** – Fully typed for safer and better development.
 - ✅ **Unit Tested** – Built with Jest to ensure reliability.
@@ -60,14 +61,15 @@ console.log(validateUrl('htp://invalid-url')); // ❌ false
 console.log(validateUrl('http://example')); // ❌ false (Missing TLD)
 console.log(validateUrl('http://999.999.999.999')); // ❌ false (Invalid IP Address)
 console.log(validateUrl('http://exa mple.com')); // ❌ false (Contains spaces)
+console.log(validateUrl('https://user:pass@example.com')); // ❌ false (Embedded credentials)
+console.log(validateUrl('http://localhost:3000')); // ❌ false (No domain)
 ```
 
 ---
 
 ### **2⃣ Check If a URL is Live**
 
-Test if a URL is reachable by sending a request with customizable allowed status
-codes.
+Test if a URL is reachable by sending it an HTTP `HEAD` request.
 
 ```typescript
 import { isUrlLive } from '@the-node-forge/url-validator';
@@ -75,14 +77,25 @@ import { isUrlLive } from '@the-node-forge/url-validator';
 isUrlLive('https://example.com').then(console.log); // ✅ true/false
 ```
 
-#### **Customizing Allowed Status Codes**
+#### **Timeout**
 
-By default, the following status codes are considered "live": `[200, 301, 302, 403]`.
-You can override this list if needed:
+The request is cancelled after 5 seconds by default. Override it with `timeoutMs`:
 
 ```typescript
-isUrlLive('https://example.com', [200, 301, 302]).then(console.log); // ✅ true if status is in the list
+isUrlLive('https://example.com', { timeoutMs: 1000 }).then(console.log); // ✅ false if no response within 1s
 ```
+
+#### **What "live" means**
+
+`isUrlLive` resolves `true` if the server responded at all, whatever the status: a
+`404` or `500` still counts. Redirects are not followed, so a `3xx` also counts.
+Non-http(s) protocols such as `ftp://` resolve `false` without sending a request.
+
+> ⚠️ **Server-side use:** `isUrlLive` requests whatever address it is given,
+> including `localhost` and cloud metadata addresses such as `169.254.169.254`.
+> `validateUrl` checks syntax only and does not prevent this (`http://internal.corp`
+> is a valid URL). If you pass untrusted input to `isUrlLive` on a server, check
+> where the host resolves to first.
 
 ---
 
@@ -105,16 +118,16 @@ validateUrl(url: string): boolean;
 ### **isUrlLive Function**
 
 ```typescript
-isUrlLive(url: string, allowedStatusCodes?: number[]): Promise<boolean>;
+isUrlLive(url: string, options?: { timeoutMs?: number }): Promise<boolean>;
 ```
 
-| Parameter            | Type                  | Description                                              |
-| -------------------- | --------------------- | -------------------------------------------------------- |
-| `url`                | `string`              | The URL to check if it's live.                           |
-| `allowedStatusCodes` | `number[]` (optional) | A list of status codes that should be considered "live". |
+| Parameter           | Type                | Default | Description                                     |
+| ------------------- | ------------------- | ------- | ----------------------------------------------- |
+| `url`               | `string`            |         | The URL to check if it's live.                  |
+| `options.timeoutMs` | `number` (optional) | `5000`  | Give up and resolve `false` after this many ms. |
 
-**Returns:** `Promise<boolean>` – Resolves to `true` if the URL is reachable and
-returns a status in `allowedStatusCodes`, otherwise `false`.
+**Returns:** `Promise<boolean>` – Resolves to `true` if the server responded (any
+status, redirects not followed), otherwise `false`. Never rejects.
 
 ---
 
