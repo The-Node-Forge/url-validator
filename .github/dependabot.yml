@@ -23,6 +23,10 @@ updates:
         patterns:
           - 'typedoc*'
           - 'docusaurus-plugin-typedoc'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
   - package-ecosystem: github-actions
     directory: /
     schedule:
